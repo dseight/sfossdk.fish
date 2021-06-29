@@ -58,7 +58,7 @@ function _sfossdk_vm
             return 1
         end
     end
-    set internal_path /home/$SFOSSDK_VM_USER/share/(realpath --relative-to=$HOME .)
+    set internal_path /host_home/(realpath --relative-to=$HOME .)
     ssh -t \
         -o UserKnownHostsFile=/dev/null \
         -o StrictHostKeyChecking=no \
