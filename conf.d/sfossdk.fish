@@ -35,8 +35,13 @@ end
 
 function _sfossdkwait
     set timeout $argv[1]
-    ssh -q -o ConnectTimeout=$timeout \
-        -p $SFOSSDK_VM_PORT -i $SFOSSDK_VM_KEY $SFOSSDK_VM_USER@$SFOSSDK_VM_HOST exit
+    ssh -q \
+        -o ConnectTimeout=$timeout \
+        -o UserKnownHostsFile=/dev/null \
+        -o StrictHostKeyChecking=no \
+        -p $SFOSSDK_VM_PORT \
+        -i $SFOSSDK_VM_KEY \
+        $SFOSSDK_VM_USER@$SFOSSDK_VM_HOST exit
 end
 
 function _sfossdk_vm
@@ -52,7 +57,12 @@ function _sfossdk_vm
         end
     end
     set internal_path /home/$SFOSSDK_VM_USER/share/(realpath --relative-to=$HOME .)
-    ssh -t -p $SFOSSDK_VM_PORT -i $SFOSSDK_VM_KEY $SFOSSDK_VM_USER@$SFOSSDK_VM_HOST cd $internal_path\; $argv
+    ssh -t \
+        -o UserKnownHostsFile=/dev/null \
+        -o StrictHostKeyChecking=no \
+        -p $SFOSSDK_VM_PORT \
+        -i $SFOSSDK_VM_KEY \
+        $SFOSSDK_VM_USER@$SFOSSDK_VM_HOST cd $internal_path\; $argv
 end
 
 function _sfossdk_chroot
