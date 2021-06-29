@@ -14,8 +14,6 @@ end
 # Following variables are used only with VM SDK (not with local SDK)
 set -q SFOSSDK_VM_ROOT
     or set -gx SFOSSDK_VM_ROOT ~/SailfishOS
-set -q SFOSSDK_VM_KEY
-    or set -gx SFOSSDK_VM_KEY $SFOSSDK_VM_ROOT/vmshare/ssh/private_keys/engine/mersdk
 set -q SFOSSDK_VM_NAME
     or set -gx SFOSSDK_VM_NAME "Sailfish OS Build Engine"
 set -q SFOSSDK_VM_USER
@@ -33,6 +31,10 @@ function sfossdkstop
     VBoxManage controlvm $SFOSSDK_VM_NAME acpipowerbutton
 end
 
+function _sfossdkvmkey
+    echo $SFOSSDK_VM_ROOT/vmshare/ssh/private_keys/engine/mersdk
+end
+
 function _sfossdkwait
     set timeout $argv[1]
     ssh -q \
@@ -40,7 +42,7 @@ function _sfossdkwait
         -o UserKnownHostsFile=/dev/null \
         -o StrictHostKeyChecking=no \
         -p $SFOSSDK_VM_PORT \
-        -i $SFOSSDK_VM_KEY \
+        -i (_sfossdkvmkey) \
         $SFOSSDK_VM_USER@$SFOSSDK_VM_HOST exit
 end
 
@@ -61,7 +63,7 @@ function _sfossdk_vm
         -o UserKnownHostsFile=/dev/null \
         -o StrictHostKeyChecking=no \
         -p $SFOSSDK_VM_PORT \
-        -i $SFOSSDK_VM_KEY \
+        -i (_sfossdkvmkey) \
         $SFOSSDK_VM_USER@$SFOSSDK_VM_HOST cd $internal_path\; $argv
 end
 
