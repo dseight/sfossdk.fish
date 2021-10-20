@@ -2,6 +2,10 @@
 
 [Fish shell](https://fishshell.com/) completions and wrappers for Sailfish (Platform) SDK.
 
+## Demo
+
+![Demo](demo.gif)
+
 ## Installation
 
 Install with [Fisher](https://github.com/jorgebucaran/fisher):
