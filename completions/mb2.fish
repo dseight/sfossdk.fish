@@ -49,6 +49,7 @@ complete -f -c mb2 -n "__fish_seen_subcommand_from apply" -s R -d "Reverse apply
 # mb2 build
 complete -f -c mb2 -n "not __fish_seen_subcommand_from $cmds" -a build -d "Run rpmbuild (except for %prep section)"
 complete -f -c mb2 -n "__fish_seen_subcommand_from build" -s p -l doprep -d "Run %prep phase as well"
+complete -f -c mb2 -n "__fish_seen_subcommand_from build" -l no-check -d "Skip the %check section and rpmlint"
 complete -f -c mb2 -n "__fish_seen_subcommand_from build" -s d -l enable-debug -d "Enable debug build"
 complete -f -c mb2 -n "__fish_seen_subcommand_from build" -s j -x -d "Number of concurrent jobs"
 
