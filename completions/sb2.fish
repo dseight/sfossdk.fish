@@ -40,6 +40,14 @@ function __fish_sb2_complete_local_executables
     end
 end
 
+function __fish_sb2_complete_executable_path --description "Complete using path"
+    set -l targets (path filter -x "$argv[1]"*)
+    if set -q targets[1]
+        # Use ls to append '/' to directories
+        printf "%s\n" (command ls -dp $targets)
+    end
+end
+
 function __fish_sb2_print_remaining_args --inherit-variable __sb2_opts
     set -l tokens (commandline -opc) (commandline -ct)
     set -e tokens[1]
@@ -77,6 +85,9 @@ function __fish_complete_sb2_subcommand
             # significantly faster completions
             __fish_sb2_complete_local_executables $target_name
         end
+
+        # Add executable files from the current directory
+        __fish_sb2_complete_executable_path $args[1]
     else
         __fish_complete_subcommand --commandline $args
     end
