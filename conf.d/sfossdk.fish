@@ -68,7 +68,11 @@ function _sfossdk_vm
 end
 
 function _sfossdk_chroot
-    $SFOSSDK_PLATFORM_SDK_PATH/mer-sdk-chroot $argv
+    if test -x $SFOSSDK_PLATFORM_SDK_PATH/sdk-chroot
+        $SFOSSDK_PLATFORM_SDK_PATH/sdk-chroot $argv
+    else
+        $SFOSSDK_PLATFORM_SDK_PATH/mer-sdk-chroot $argv
+    end
 end
 
 function sfossdk --description "Mer SDK chroot"
